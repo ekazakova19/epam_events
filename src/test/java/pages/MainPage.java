@@ -3,8 +3,8 @@ package pages;
 import org.openqa.selenium.WebDriver;
 
 public class MainPage {
-    WebDriver driver;
-    public String mainPageUrl = "https://events.epam.com";
+    private WebDriver driver;
+    public static final String MAIN_PAGE_URL = "https://events.epam.com";
 
     public HeaderNavBarElement headerNavBarElement;
 

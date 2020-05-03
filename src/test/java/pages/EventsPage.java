@@ -9,9 +9,9 @@ import java.util.List;
 
 public class EventsPage {
 
-    WebDriver driver;
+    private WebDriver driver;
 
-    public String eventsPageURL ="https://events.epam.com/events";
+    public static final String EVENTS_PAGE_URL ="https://events.epam.com/events";
 
     @FindBy(xpath = "//span[contains(text(),'Upcoming Events')]")
     public WebElement UPCOMING_EVENTS_NAV_LINK;
@@ -34,10 +34,6 @@ public class EventsPage {
     public EventsPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
-    }
-
-    void initListEventCardElement(){
-
     }
 
     public int getDisplayedEventCount(){
