@@ -15,7 +15,7 @@ public class MainPageSteps {
     }
 
     public void navigateToEvents(){
-        driver.get(mainPage.mainPageUrl);
+        driver.get(MainPage.MAIN_PAGE_URL);
         mainPage.headerNavBarElement.EVENTS_LINK.click();
         Assertions.assertTrue(driver.getCurrentUrl().contains("events"),"Events page not opened");
     }

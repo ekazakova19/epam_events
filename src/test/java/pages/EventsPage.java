@@ -26,10 +26,10 @@ public class EventsPage {
     public WebElement UPCOMING_EVENT_COUNTER;
 
     @FindBy(css="div.evnt-events-column")
-    List<WebElement> eventCardsList;
+    List<WebElement> EVENT_CARD_WEBELEMENT;
 
 
-    List<EventCardElement> eventCardElements;
+    public List<EventCardElement> eventCardElements ;
 
     public EventsPage(WebDriver driver) {
         this.driver = driver;
@@ -37,8 +37,14 @@ public class EventsPage {
     }
 
     public int getDisplayedEventCount(){
-        return eventCardsList.size();
+        return EVENT_CARD_WEBELEMENT.size();
     }
 
+    public void initEventCardElementsList(){
+        for(WebElement element : EVENT_CARD_WEBELEMENT){
+            eventCardElements.add(new EventCardElement(driver,element));
+        }
+        System.out.println("eventCardElements initialized "+eventCardElements.size());
+    }
 
 }

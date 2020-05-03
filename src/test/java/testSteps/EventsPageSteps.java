@@ -5,12 +5,17 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.EventCardElement;
 import pages.EventsPage;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EventsPageSteps {
     WebDriver driver;
     WebDriverWait wait;
     EventsPage eventsPage;
+    EventCardElement eventCardElement;
 
     public EventsPageSteps(WebDriver driver) {
         this.driver = driver;
@@ -24,17 +29,33 @@ public class EventsPageSteps {
 
     }
     public void openUpcomingEvents(){
-        driver.get(eventsPage.eventsPageURL);
+        driver.get(EventsPage.EVENTS_PAGE_URL);
         clickOnUpcomingEvents();
     }
 
-    public void assertThatEventCardDisplayed(){
+    public void assertThatEventCardsDisplayed(){
         Assertions.assertTrue(eventsPage.getDisplayedEventCount()>0);
     }
+
     public int getUpcomingEventCounterValue(){
         return Integer.parseInt(eventsPage.UPCOMING_EVENT_COUNTER.getText());
     }
+
     public void assertThatUpcomingEventsCounterCorrect(){
         Assertions.assertEquals(getUpcomingEventCounterValue(),eventsPage.getDisplayedEventCount());
+    }
+
+    public void assertThatEveryEventCardHasFields(){
+        eventsPage.initEventCardElementsList();
+        for (EventCardElement eventCardElement: eventsPage.eventCardElements) {
+            assertAll("Assert that fields are not empty",
+                    ()->assertTrue(!eventCardElement.LOCATION.getText().isEmpty()),
+                    ()->assertTrue(!eventCardElement.LAUNGUAGE.getText().isEmpty()),
+                    ()->assertTrue(!eventCardElement.EVENT_NAME.getText().isEmpty()),
+                    ()->assertTrue(!eventCardElement.EVENT_DATE.getText().isEmpty()),
+                    ()->assertTrue(!eventCardElement.EVENT_STATUS.getText().isEmpty()),
+                    ()->assertTrue(eventCardElement.EVENT_SPEAKERS_LIST.size()!=0)
+            );
+        }
     }
 }

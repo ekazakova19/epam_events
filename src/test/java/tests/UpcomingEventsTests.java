@@ -18,10 +18,19 @@ public class UpcomingEventsTests extends BaseTest{
 
     @Test
     @DisplayName("View epam upcoming events")
-    void viewUpcomingEvents(){
+    void viewUpcomingEventsTest(){
         mainPageSteps.navigateToEvents();
         eventsPageSteps.clickOnUpcomingEvents();
-        eventsPageSteps.assertThatEventCardDisplayed();
+        eventsPageSteps.assertThatEventCardsDisplayed();
         eventsPageSteps.assertThatUpcomingEventsCounterCorrect();
+    }
+
+    @Test
+    @DisplayName("View event card")
+    void viewEventCardTest(){
+        eventsPageSteps.openUpcomingEvents();
+        eventsPageSteps.assertThatEventCardsDisplayed();
+        eventsPageSteps.assertThatEveryEventCardHasFields();
+
     }
 }
