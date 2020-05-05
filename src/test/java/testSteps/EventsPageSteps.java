@@ -8,6 +8,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.EventCardElement;
 import pages.EventsPage;
 
+import java.time.LocalDate;
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -48,7 +56,7 @@ public class EventsPageSteps {
     }
 
     public void assertThatEveryEventCardHasFields(){
-        eventsPage.initEventCardElementsList();
+        eventsPage.initEventCardElementsList(eventsPage.ALL_EVENTS_LIST);
         for (EventCardElement eventCardElement: eventsPage.eventCardElements) {
             assertAll("Assert that fields are not empty",
                     ()->assertTrue(!eventCardElement.LOCATION.getText().isEmpty()),
@@ -70,7 +78,38 @@ public class EventsPageSteps {
        else if(numberOfDisplayedCards>1){
           randomCardNumber=new Random().ints(1,eventsPage.getDisplayedEventCount()).findAny().getAsInt();
        }
-       eventsPage.EVENT_CARD_WEBELEMENT.get(randomCardNumber-1).click();
+       eventsPage.ALL_EVENTS_LIST.get(randomCardNumber-1).click();
        return new EventInfoPageSteps(driver);
+    }
+
+    public void assertThatThisWeekEventsDisplayed(){
+        Assertions.assertTrue(!eventsPage.THIS_WEEK_EVENTS_LIST.isEmpty());
+    }
+
+    public void assertThatThisWeekEventsOnThisWeek(){
+        //restrict to this week only
+        eventsPage.initEventCardElementsList(eventsPage.THIS_WEEK_EVENTS_LIST);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
+
+        for (EventCardElement eventCardElement : eventsPage.eventCardElements){
+           LocalDate eventDate = LocalDate.parse(eventCardElement.EVENT_DATE.getText(),formatter);
+           Assertions.assertTrue(isDateInCurrentWeek(eventDate),"Event date less than today date or it is out of the current week");
+        }
+    }
+
+    public boolean isDateInCurrentWeek(LocalDate date){
+        LocalDate today = LocalDate.now();
+        LocalDate mondayOfCurrentWeek = today.with(previousOrSame(MONDAY));
+        LocalDate sundayOfCurrentWeek = today.with(nextOrSame(SUNDAY));
+        if(date.isBefore(today)){
+            return false;
+        }
+        else if((date.isEqual(mondayOfCurrentWeek) || date.isAfter(mondayOfCurrentWeek))
+                && (date.isEqual(sundayOfCurrentWeek)||date.isBefore(sundayOfCurrentWeek))){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

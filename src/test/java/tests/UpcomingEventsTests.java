@@ -3,7 +3,6 @@ package tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pages.EventInfoPage;
 import testSteps.EventInfoPageSteps;
 import testSteps.EventsPageSteps;
 import testSteps.MainPageSteps;
@@ -30,17 +29,19 @@ public class UpcomingEventsTests extends BaseTest{
     }
 
     @Test
-    @DisplayName("View event card")
+    @DisplayName("View displayed upcoming event cards")
     void viewEventCardTest(){
         eventsPageSteps.openUpcomingEvents();
         eventsPageSteps.assertThatEventCardsDisplayed();
         eventsPageSteps.assertThatEveryEventCardHasFields();
     }
     @Test
-    @DisplayName("View event details")
+    @DisplayName("Check upcoming event's date in this week block")
     void validateUpcomingEventDatesTest(){
         eventsPageSteps.openUpcomingEvents();
         eventsPageSteps.assertThatEventCardsDisplayed();
+        eventsPageSteps.assertThatThisWeekEventsDisplayed();
+        eventsPageSteps.assertThatThisWeekEventsOnThisWeek();
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventsPage {
@@ -26,10 +27,14 @@ public class EventsPage {
     public WebElement UPCOMING_EVENT_COUNTER;
 
     @FindBy(css="div.evnt-events-column")
-    public List<WebElement> EVENT_CARD_WEBELEMENT;
+    public List<WebElement> ALL_EVENTS_LIST;
+
+    @FindBy(xpath="//div[@class='evnt-cards-container' and .//h3[text()='This week']]//div[contains(@class,'evnt-events-column')]")
+    public List<WebElement> THIS_WEEK_EVENTS_LIST;
 
 
-    public List<EventCardElement> eventCardElements ;
+
+    public List<EventCardElement> eventCardElements = new ArrayList<EventCardElement>();
 
     public EventsPage(WebDriver driver) {
         this.driver = driver;
@@ -37,14 +42,13 @@ public class EventsPage {
     }
 
     public int getDisplayedEventCount(){
-        return EVENT_CARD_WEBELEMENT.size();
+        return ALL_EVENTS_LIST.size();
     }
 
-    public void initEventCardElementsList(){
-        for(WebElement element : EVENT_CARD_WEBELEMENT){
+    public void initEventCardElementsList(List<WebElement> eventList){
+        for(WebElement element : eventList){
             eventCardElements.add(new EventCardElement(driver,element));
         }
-        System.out.println("eventCardElements initialized "+eventCardElements.size());
     }
 
 }
