@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.EventCardElement;
 import pages.EventsPage;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -57,5 +59,18 @@ public class EventsPageSteps {
                     ()->assertTrue(eventCardElement.EVENT_SPEAKERS_LIST.size()!=0)
             );
         }
+    }
+
+    public EventInfoPageSteps clickOnAnyDisplayedEventCard(){
+       int numberOfDisplayedCards = eventsPage.getDisplayedEventCount();
+       int randomCardNumber = 1;
+       if(numberOfDisplayedCards==0){
+           Assertions.fail("No one event card found on the page");
+       }
+       else if(numberOfDisplayedCards>1){
+          randomCardNumber=new Random().ints(1,eventsPage.getDisplayedEventCount()).findAny().getAsInt();
+       }
+       eventsPage.EVENT_CARD_WEBELEMENT.get(randomCardNumber-1).click();
+       return new EventInfoPageSteps(driver);
     }
 }

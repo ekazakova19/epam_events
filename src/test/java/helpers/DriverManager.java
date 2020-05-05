@@ -28,6 +28,7 @@ public class DriverManager {
                 logger.info("Chrome browser set up successfully");
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
         return driver;
     }
 

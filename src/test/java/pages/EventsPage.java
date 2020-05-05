@@ -26,7 +26,7 @@ public class EventsPage {
     public WebElement UPCOMING_EVENT_COUNTER;
 
     @FindBy(css="div.evnt-events-column")
-    List<WebElement> EVENT_CARD_WEBELEMENT;
+    public List<WebElement> EVENT_CARD_WEBELEMENT;
 
 
     public List<EventCardElement> eventCardElements ;
