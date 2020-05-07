@@ -1,31 +1,22 @@
 package testSteps;
 
 
+import helpers.DateManager;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.EventCardElement;
 import pages.EventsPage;
-
 import java.time.LocalDate;
-import static java.time.DayOfWeek.MONDAY;
-import static java.time.DayOfWeek.SUNDAY;
-import static java.time.temporal.TemporalAdjusters.nextOrSame;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
-
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EventsPageSteps {
-    WebDriver driver;
-    WebDriverWait wait;
-    EventsPage eventsPage;
-    EventCardElement eventCardElement;
+    private WebDriver driver;
+    private WebDriverWait wait;
+    private EventsPage eventsPage;
 
     public EventsPageSteps(WebDriver driver) {
         this.driver = driver;
@@ -36,23 +27,38 @@ public class EventsPageSteps {
     public void clickOnUpcomingEvents(){
         eventsPage.UPCOMING_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.UPCOMING_EVENTS_ACTIVE));
-
+    }
+    public void clickOnPastvents(){
+        eventsPage.PAST_EVENTS_NAV_LINK.click();
+        wait.until(ExpectedConditions.visibilityOf(eventsPage.PAST_EVENTS_ACTIVE));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }
     public void openUpcomingEvents(){
         driver.get(EventsPage.EVENTS_PAGE_URL);
         clickOnUpcomingEvents();
     }
 
+    public void openPastEvents(){
+        driver.get(EventsPage.EVENTS_PAGE_URL);
+        clickOnPastvents();
+    }
+
     public void assertThatEventCardsDisplayed(){
         Assertions.assertTrue(eventsPage.getDisplayedEventCount()>0);
     }
 
-    public int getUpcomingEventCounterValue(){
+    private int getUpcomingEventCounterValue(){
         return Integer.parseInt(eventsPage.UPCOMING_EVENT_COUNTER.getText());
+    }
+    private int getPastEventCounterValue(){
+        return Integer.parseInt(eventsPage.PAST_EVENT_COUNTER.getText());
     }
 
     public void assertThatUpcomingEventsCounterCorrect(){
         Assertions.assertEquals(getUpcomingEventCounterValue(),eventsPage.getDisplayedEventCount());
+    }
+    public void assertThatPastEventsCounterCorrect(){
+        Assertions.assertEquals(getPastEventCounterValue(),eventsPage.getDisplayedEventCount());
     }
 
     public void assertThatEveryEventCardHasFields(){
@@ -83,33 +89,36 @@ public class EventsPageSteps {
     }
 
     public void assertThatThisWeekEventsDisplayed(){
-        Assertions.assertTrue(!eventsPage.THIS_WEEK_EVENTS_LIST.isEmpty());
+        Assertions.assertTrue(!eventsPage.THIS_WEEK_EVENTS_LIST.isEmpty(),"This week events are absent on the page");
     }
 
     public void assertThatThisWeekEventsOnThisWeek(){
-        //restrict to this week only
         eventsPage.initEventCardElementsList(eventsPage.THIS_WEEK_EVENTS_LIST);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
-
         for (EventCardElement eventCardElement : eventsPage.eventCardElements){
-           LocalDate eventDate = LocalDate.parse(eventCardElement.EVENT_DATE.getText(),formatter);
-           Assertions.assertTrue(isDateInCurrentWeek(eventDate),"Event date less than today date or it is out of the current week");
+           LocalDate eventDate = LocalDate.parse(DateManager.handleRangeEventDate(eventCardElement.EVENT_DATE.getText())
+                   ,DateManager.EVENTDATE_FORMATTER);
+           Assertions.assertTrue(DateManager.isDateInCurrentWeek(eventDate),"Event date less than today date or it is out of the current week");
         }
     }
 
-    public boolean isDateInCurrentWeek(LocalDate date){
-        LocalDate today = LocalDate.now();
-        LocalDate mondayOfCurrentWeek = today.with(previousOrSame(MONDAY));
-        LocalDate sundayOfCurrentWeek = today.with(nextOrSame(SUNDAY));
-        if(date.isBefore(today)){
-            return false;
-        }
-        else if((date.isEqual(mondayOfCurrentWeek) || date.isAfter(mondayOfCurrentWeek))
-                && (date.isEqual(sundayOfCurrentWeek)||date.isBefore(sundayOfCurrentWeek))){
-            return true;
-        }
-        else {
-            return false;
+    public void assertThatEventsDateIsLessThanToday(){
+        eventsPage.initEventCardElementsList(eventsPage.ALL_EVENTS_LIST);
+        for (EventCardElement eventCardElement : eventsPage.eventCardElements){
+            LocalDate eventDate = LocalDate.parse(DateManager.handleRangeEventDate(eventCardElement.EVENT_DATE.getText())
+                    ,DateManager.EVENTDATE_FORMATTER);
+            Assertions.assertTrue(DateManager.isDateBeforeThanToday(eventDate),"Event date more than today date");
         }
     }
+
+    public void filterByLocation(String location){
+        eventsPage.eventFilterPanelElement.LOCATION_FIELD.click();
+        wait.until(ExpectedConditions.visibilityOf(eventsPage.eventFilterPanelElement.LOCATION_INPUT_FIELD));
+        eventsPage.eventFilterPanelElement.LOCATION_INPUT_FIELD.sendKeys(location);
+        System.out.println(eventsPage.eventFilterPanelElement.FOUND_CHECKBOX.getText());
+        Assertions.assertTrue(eventsPage.eventFilterPanelElement.FOUND_CHECKBOX.getText().equalsIgnoreCase(location));
+        eventsPage.eventFilterPanelElement.FOUND_CHECKBOX.click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
+    }
+
+
 }
