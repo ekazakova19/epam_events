@@ -18,15 +18,8 @@ public class PastEventsTests extends BaseTest {
     @DisplayName("View past events in Canada")
     public void viewPastEventsInCanadaTest(){
         eventsPageSteps.openPastEvents();
-        eventsPageSteps.filterByLocation("Canada");
+        eventsPageSteps.filterSteps.filterByLocation("Canada");
         eventsPageSteps.assertThatPastEventsCounterCorrect();
         eventsPageSteps.assertThatEventsDateIsLessThanToday();
     }
-
-    @Test
-    @DisplayName("View past events in Canada")
-    public void debug(){
-
-    }
-
 }

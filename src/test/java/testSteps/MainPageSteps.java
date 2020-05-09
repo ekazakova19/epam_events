@@ -19,5 +19,10 @@ public class MainPageSteps {
         mainPage.headerNavBarElement.EVENTS_LINK.click();
         Assertions.assertTrue(driver.getCurrentUrl().contains("events"),"Events page not opened");
     }
+    public void navigateToTalksLibrary(){
+        driver.get(MainPage.MAIN_PAGE_URL);
+        mainPage.headerNavBarElement.TALKS_LIBRARY_LINK.click();
+        Assertions.assertTrue(driver.getCurrentUrl().contains("talks"),"Talks library page not opened");
+    }
 
 }

@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.EventCardElement;
 import pages.EventsPage;
+
+import javax.xml.stream.EventFilter;
 import java.time.LocalDate;
 import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,22 +19,26 @@ public class EventsPageSteps {
     private WebDriver driver;
     private WebDriverWait wait;
     private EventsPage eventsPage;
+    public FilterSteps filterSteps;
 
     public EventsPageSteps(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver,5);
         eventsPage = new EventsPage(driver);
+        filterSteps = new FilterSteps(driver);
     }
 
     public void clickOnUpcomingEvents(){
         eventsPage.UPCOMING_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.UPCOMING_EVENTS_ACTIVE));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }
-    public void clickOnPastvents(){
+    public void clickOnPastEvents(){
         eventsPage.PAST_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.PAST_EVENTS_ACTIVE));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }
+
     public void openUpcomingEvents(){
         driver.get(EventsPage.EVENTS_PAGE_URL);
         clickOnUpcomingEvents();
@@ -40,7 +46,7 @@ public class EventsPageSteps {
 
     public void openPastEvents(){
         driver.get(EventsPage.EVENTS_PAGE_URL);
-        clickOnPastvents();
+        clickOnPastEvents();
     }
 
     public void assertThatEventCardsDisplayed(){
@@ -108,16 +114,6 @@ public class EventsPageSteps {
                     ,DateManager.EVENTDATE_FORMATTER);
             Assertions.assertTrue(DateManager.isDateBeforeThanToday(eventDate),"Event date more than today date");
         }
-    }
-
-    public void filterByLocation(String location){
-        eventsPage.eventFilterPanelElement.LOCATION_FIELD.click();
-        wait.until(ExpectedConditions.visibilityOf(eventsPage.eventFilterPanelElement.LOCATION_INPUT_FIELD));
-        eventsPage.eventFilterPanelElement.LOCATION_INPUT_FIELD.sendKeys(location);
-        System.out.println(eventsPage.eventFilterPanelElement.FOUND_CHECKBOX.getText());
-        Assertions.assertTrue(eventsPage.eventFilterPanelElement.FOUND_CHECKBOX.getText().equalsIgnoreCase(location));
-        eventsPage.eventFilterPanelElement.FOUND_CHECKBOX.click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }
 
 
