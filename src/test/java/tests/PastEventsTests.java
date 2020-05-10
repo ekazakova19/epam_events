@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import testSteps.EventsPageSteps;
+import testSteps.FilterType;
 
 public class PastEventsTests extends BaseTest {
 
@@ -18,7 +19,7 @@ public class PastEventsTests extends BaseTest {
     @DisplayName("View past events in Canada")
     public void viewPastEventsInCanadaTest(){
         eventsPageSteps.openPastEvents();
-        eventsPageSteps.filterSteps.filterByLocation("Canada");
+        eventsPageSteps.filterSteps.applyFilters(FilterType.LOCATION,"Canada");
         eventsPageSteps.assertThatPastEventsCounterCorrect();
         eventsPageSteps.assertThatEventsDateIsLessThanToday();
     }
