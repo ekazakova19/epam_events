@@ -41,6 +41,9 @@ public class EventFilterPanelELement {
     @FindBy(xpath = "//div[contains(@class,'evnt-toggle-filters-button')]")
     public WebElement EVENT_TOOGLE_BUTTON;
 
+    @FindBy(css="div.evnt-search-filter>input")
+    public WebElement SEARCH_FIELD;
+
     public By LOADER = By.cssSelector("div.evnt-global-loader");
 
 

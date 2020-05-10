@@ -11,7 +11,7 @@ public enum FilterType {
         this.type = type;
     }
 
-    public String getType(){
+    public String getTypeAsString(){
         return type;
     }
 }
