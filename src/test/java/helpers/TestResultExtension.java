@@ -3,7 +3,6 @@ package helpers;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
@@ -19,6 +18,10 @@ public class TestResultExtension implements TestWatcher {
     private static final Logger logger = LogManager.getLogger(TestResultExtension.class);
 
     @Override
+    public void testSuccessful(ExtensionContext context){
+        logger.info("Test \" {} \" - PASSED",context.getDisplayName());
+    }
+    @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
         logger.info("Test \" {} \" failed due to : {}",context.getDisplayName(),cause.getMessage());
         Object testClass = context.getRequiredTestInstance();
@@ -30,7 +33,6 @@ public class TestResultExtension implements TestWatcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         File SrcFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
         try {

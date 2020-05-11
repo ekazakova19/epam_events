@@ -76,6 +76,7 @@ public class FilterSteps {
 
     public void searchTalk(String value){
         eventFilterPanelELement.SEARCH_FIELD.sendKeys(value);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventFilterPanelELement.LOADER));
     }
 
 }

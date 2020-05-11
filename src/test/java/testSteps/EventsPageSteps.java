@@ -30,7 +30,6 @@ public class EventsPageSteps {
 
     public void clickOnUpcomingEvents(){
         eventsPage.UPCOMING_EVENTS_NAV_LINK.click();
-        Assertions.fail("fail");
         wait.until(ExpectedConditions.visibilityOf(eventsPage.UPCOMING_EVENTS_ACTIVE));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }

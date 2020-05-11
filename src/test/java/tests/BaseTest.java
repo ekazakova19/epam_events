@@ -1,12 +1,17 @@
 package tests;
 
+import helpers.TestResultExtension;
 import helpers.WebDriverLoggingListener;
 import helpers.DriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.aeonbits.owner.ConfigFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -20,9 +25,8 @@ public class BaseTest {
     protected WebDriver driver;
     TestConfig testConfig;
 
-
     public WebDriver setUpLocal(String browser){
-        driver = DriverManager.getDriver(browser);
+        driver = new DriverManager().getDriver(browser);
         return driver;
 
     }
@@ -44,8 +48,6 @@ public class BaseTest {
     @BeforeEach
     public void setUp(){
         testConfig = ConfigFactory.create(TestConfig.class);
-        System.out.println(testConfig.browser());
-        System.out.println(testConfig.runTestStrategy());
         switch (testConfig.runTestStrategy().toUpperCase()){
             case "REMOTE" :
                driver = setUpRemote(testConfig.browser());
@@ -67,6 +69,8 @@ public class BaseTest {
 
     @AfterEach
     public void tearDown(){
-        DriverManager.closeDriver();
+        if(driver!=null){
+            driver.quit();
+        }
     }
 }

@@ -8,15 +8,15 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverManager {
 
-    private static WebDriver driver;
+    private  WebDriver driver;
     private static final Logger logger = LogManager.getLogger(DriverManager.class);
 
-    public static WebDriver getDriver(String browser) {
+    public  WebDriver getDriver(String browser) {
 
         switch (browser.toLowerCase()) {
             case "chrome":
                 driver = Drivers.CHROME.createDriver();
-                logger.info("Chrome browser set up successfully");
+                logger.info("Chrome browser set up successfully {}", driver);
                 break;
             case "firefox":
                 driver = Drivers.FIREFOX.createDriver();
@@ -32,9 +32,4 @@ public class DriverManager {
         return driver;
     }
 
-    public static void closeDriver(){
-        if(driver!=null){
-            driver.quit();
-        }
-    }
 }
