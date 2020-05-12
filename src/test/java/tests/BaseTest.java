@@ -28,7 +28,6 @@ public class BaseTest {
     public WebDriver setUpLocal(String browser){
         driver = new DriverManager().getDriver(browser);
         return driver;
-
     }
     public WebDriver setUpRemote(String browser){
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -67,8 +66,9 @@ public class BaseTest {
     }
 
 
-    @AfterEach
+   // @AfterEach
     public void tearDown(){
+        System.out.println("AFTER EACH driver closed");
         if(driver!=null){
             driver.quit();
         }

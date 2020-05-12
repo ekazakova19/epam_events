@@ -10,6 +10,7 @@
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
     <build>
@@ -18,20 +19,49 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>junit.jupiter.extensions.autodetection.enabled</name>
+                            <value>true</value>
+                        </property>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemProperties>
                     <properties>
                         <configurationParameters>
                             junit.jupiter.execution.parallel.enabled = true
-                            <!--junit.jupiter.execution.parallel.mode.default = same_thread-->
-                            <!--junit.jupiter.execution.parallel.mode.classes.default = concurrent-->
                             junit.jupiter.execution.parallel.mode.default = concurrent
                             junit.jupiter.execution.parallel.mode.classes.default = same_thread
                         </configurationParameters>
                     </properties>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                    <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                    <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.2</version>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>2.4.1</reportVersion>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -72,6 +102,12 @@
         <groupId>org.aeonbits.owner</groupId>
         <artifactId>owner</artifactId>
         <version>1.0.11</version>
+    </dependency>
+    <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-junit5</artifactId>
+        <version>2.13.3</version>
+        <scope>test</scope>
     </dependency>
 </dependencies>
 </project>

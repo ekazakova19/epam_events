@@ -8,6 +8,6 @@ public interface TestConfig extends Config {
     @DefaultValue("chrome")
     String browser();
 
-    @DefaultValue("remote")
+    @DefaultValue("local")
     String runTestStrategy();
 }

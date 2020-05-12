@@ -2,6 +2,7 @@ package testSteps;
 
 
 import helpers.LocatorsHelper;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,9 +28,11 @@ public class FilterSteps {
         talkPage = new TalkPage(driver);
     }
 
+    @Step("Click on More Filters button")
     public void clickOnMoreFilters(){
         eventFilterPanelELement.EVENT_TOOGLE_BUTTON.click();
     }
+
 
     public void applyFilters(FilterType filterType, String value) {
         switch (filterType.getTypeAsString().toUpperCase()){
@@ -46,6 +49,7 @@ public class FilterSteps {
           appliedFilters.put(filterType,value);
     }
 
+    @Step("Apply filter by event location")
     private void filterByLocation(String value){
         eventFilterPanelELement.LOCATION_FIELD.click();
         wait.until(ExpectedConditions.visibilityOf(eventFilterPanelELement.LOCATION_INPUT_FIELD));
@@ -56,6 +60,7 @@ public class FilterSteps {
         eventFilterPanelELement.LOCATION_FIELD.click();
     }
 
+    @Step("Apply filter by event category")
     private void filterByCategory(String value){
         eventFilterPanelELement.CATEGORY_FIELD.click();
         driver.findElement(LocatorsHelper.generateXpathLocatorForItem(eventFilterPanelELement.CATEGORIES_GROUP_ITEM_PATTERN,value)).click();
@@ -63,6 +68,7 @@ public class FilterSteps {
         eventFilterPanelELement.CATEGORY_FIELD.click();
     }
 
+    @Step("Apply filter by event language")
     private void filterByLanguage(String value){
         eventFilterPanelELement.LAUNGUAGE_FIELD.click();
         driver.findElement(LocatorsHelper.generateXpathLocatorForItem(eventFilterPanelELement.LAUNGUAGE_ITEM_PATTERN,value)).click();
@@ -70,10 +76,12 @@ public class FilterSteps {
         eventFilterPanelELement.LAUNGUAGE_FIELD.click();
     }
 
+    @Step("Wait until filter apply")
     private void waitUntilFilterApply(){
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventFilterPanelELement.LOADER));
     }
 
+    @Step("Search talk ")
     public void searchTalk(String value){
         eventFilterPanelELement.SEARCH_FIELD.sendKeys(value);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventFilterPanelELement.LOADER));

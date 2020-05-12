@@ -1,11 +1,14 @@
 package tests;
 
+import helpers.TestResultExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import testSteps.EventsPageSteps;
 import testSteps.FilterType;
 
+@ExtendWith(TestResultExtension.class)
 public class PastEventsTests extends BaseTest {
 
     EventsPageSteps eventsPageSteps;

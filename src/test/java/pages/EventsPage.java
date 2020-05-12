@@ -33,7 +33,7 @@ public class EventsPage {
     @FindBy(xpath = "//a[.//span[contains(text(),'Past Events')]]/span[contains(@class,'evnt-tab-counter')]")
     public WebElement PAST_EVENT_COUNTER;
 
-    @FindBy(css="div.evnt-events-column")
+    @FindBy(css="div.evnt-event-card")
     public List<WebElement> ALL_EVENTS_LIST;
 
     @FindBy(xpath="//div[@class='evnt-cards-container' and .//h3[text()='This week']]//div[contains(@class,'evnt-events-column')]")

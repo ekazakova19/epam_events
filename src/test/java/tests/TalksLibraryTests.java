@@ -1,12 +1,15 @@
 package tests;
 
+import helpers.TestResultExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import testSteps.FilterType;
 import testSteps.MainPageSteps;
 import testSteps.TalksLibraryPageSteps;
 
+@ExtendWith(TestResultExtension.class)
 public class TalksLibraryTests extends BaseTest {
 
     MainPageSteps mainPageSteps;

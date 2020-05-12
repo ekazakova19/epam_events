@@ -1,6 +1,7 @@
 package testSteps;
 
 import helpers.LocatorsHelper;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +35,7 @@ public class TalksLibraryPageSteps {
         }
     }
 
+    @Step("Assert that talk's cars is shown on the page")
     public void assertThatTalksCardShown() {
         Assertions.assertFalse(talksLibraryPage.talksCardsList.isEmpty(), "No one talks card is shown on the page");
     }
@@ -60,6 +62,7 @@ public class TalksLibraryPageSteps {
         }
     }
 
+    @Step("Assert that search results are correct")
     public void assertSearchResults(String searchValue){
         for (WebElement talksCard : talksLibraryPage.talksCardsList) {
             String eventName = talksCard.findElement(talksLibraryPage.EVENT_TALK_NAME).getText();
@@ -69,18 +72,21 @@ public class TalksLibraryPageSteps {
         }
     }
 
+    @Step("Assert that location filter applied")
     private void assertTalksLocation(String expectedValue) {
         String actualText = talkPage.LOCATION.getText();
         Assertions.assertTrue(actualText.contains(expectedValue),
                 String.format("Location value does not match filter criteria. " +
                         "Expected location - %s , Actual Location - %s, Talk - %s ", expectedValue,actualText,driver.getCurrentUrl()));
     }
+    @Step("Assert that language filter applied")
     private void assertTalksLanguage(String expectedValue){
         String actualLanguage = talkPage.LANGUAGE.getText();
         Assertions.assertTrue(actualLanguage.equalsIgnoreCase(expectedValue),
                 String.format("Language value does not match filter criteria. Expected value - %s, Actual value - %s, Talk %s"
                         ,expectedValue,actualLanguage,driver.getCurrentUrl()));
     }
+    @Step("Assert that category filter applied")
     private void assertTalksCategory(String expectedValue){
         By generatedLocator = LocatorsHelper.generateXpathLocatorForItem(talkPage.TOPIC_PATTERN,expectedValue);
         Assertions.assertTrue( driver.findElement(generatedLocator).isDisplayed()

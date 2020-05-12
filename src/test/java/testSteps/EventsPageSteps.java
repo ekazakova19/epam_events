@@ -2,6 +2,7 @@ package testSteps;
 
 
 import helpers.DateManager;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,27 +29,32 @@ public class EventsPageSteps {
         filterSteps = new FilterSteps(driver);
     }
 
+    @Step("Click on Upcoming Events tab")
     public void clickOnUpcomingEvents(){
         eventsPage.UPCOMING_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.UPCOMING_EVENTS_ACTIVE));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }
+    @Step("Click on Past Events tab")
     public void clickOnPastEvents(){
         eventsPage.PAST_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.PAST_EVENTS_ACTIVE));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
     }
 
+    @Step("Open events page and click on Upcoming Events")
     public void openUpcomingEvents(){
         driver.get(EventsPage.EVENTS_PAGE_URL);
         clickOnUpcomingEvents();
     }
 
+    @Step("Open Events page and click on Past Events")
     public void openPastEvents(){
         driver.get(EventsPage.EVENTS_PAGE_URL);
         clickOnPastEvents();
     }
 
+    @Step("Assert that event cards is shown on the page")
     public void assertThatEventCardsDisplayed(){
         Assertions.assertTrue(eventsPage.getDisplayedEventCount()>0);
     }
@@ -60,13 +66,17 @@ public class EventsPageSteps {
         return Integer.parseInt(eventsPage.PAST_EVENT_COUNTER.getText());
     }
 
+    @Step("Assert that upcoming events counter is equal to displayed events count")
     public void assertThatUpcomingEventsCounterCorrect(){
         Assertions.assertEquals(getUpcomingEventCounterValue(),eventsPage.getDisplayedEventCount());
     }
+
+    @Step("Assert that past event's counter is equal to displayed past events")
     public void assertThatPastEventsCounterCorrect(){
         Assertions.assertEquals(getPastEventCounterValue(),eventsPage.getDisplayedEventCount());
     }
 
+    @Step("Assert that every event card has correct fields")
     public void assertThatEveryEventCardHasFields(){
         eventsPage.initEventCardElementsList(eventsPage.ALL_EVENTS_LIST);
         for (EventCardElement eventCardElement: eventsPage.eventCardElements) {
@@ -81,6 +91,7 @@ public class EventsPageSteps {
         }
     }
 
+    @Step("Click on random displayed event card")
     public EventInfoPageSteps clickOnAnyDisplayedEventCard(){
        int numberOfDisplayedCards = eventsPage.getDisplayedEventCount();
        int randomCardNumber = 1;
@@ -94,10 +105,11 @@ public class EventsPageSteps {
        return new EventInfoPageSteps(driver);
     }
 
+    @Step("Assert that this week events are shown")
     public void assertThatThisWeekEventsDisplayed(){
         Assertions.assertTrue(!eventsPage.THIS_WEEK_EVENTS_LIST.isEmpty(),"This week events are absent on the page");
     }
-
+    @Step("Assert that this week events are after today and before next week")
     public void assertThatThisWeekEventsOnThisWeek(){
         eventsPage.initEventCardElementsList(eventsPage.THIS_WEEK_EVENTS_LIST);
         for (EventCardElement eventCardElement : eventsPage.eventCardElements){
@@ -107,6 +119,7 @@ public class EventsPageSteps {
         }
     }
 
+    @Step("Assert that past events are before today date")
     public void assertThatEventsDateIsLessThanToday(){
         eventsPage.initEventCardElementsList(eventsPage.ALL_EVENTS_LIST);
         for (EventCardElement eventCardElement : eventsPage.eventCardElements){
