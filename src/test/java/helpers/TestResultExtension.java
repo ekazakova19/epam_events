@@ -1,20 +1,18 @@
 package helpers;
 
-import org.apache.commons.io.FileUtils;
+import io.qameta.allure.Attachment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 
-public class TestResultExtension implements TestWatcher {
-    WebDriver driver;
+public class TestResultExtension implements TestWatcher, AfterEachCallback {
+    private WebDriver driver;
     private static final Logger logger = LogManager.getLogger(TestResultExtension.class);
 
     @Override
@@ -24,7 +22,25 @@ public class TestResultExtension implements TestWatcher {
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
         logger.info("Test \" {} \" failed due to : {}",context.getDisplayName(),cause.getMessage());
-        Object testClass = context.getRequiredTestInstance();
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    private byte[] takeScreenshot() {
+      return ((TakesScreenshot)this.driver).getScreenshotAs(OutputType.BYTES);
+
+    }
+
+    @Override
+    public void afterEach(ExtensionContext extensionContext) {
+        getDriverFieldOfTest(extensionContext);
+        if(extensionContext.getExecutionException().isPresent()){
+            takeScreenshot();
+        }
+        quitDriver();
+    }
+
+    private void getDriverFieldOfTest(ExtensionContext extensionContext){
+        Object testClass = extensionContext.getRequiredTestInstance();
         Field driver;
         try {
             driver = testClass.getClass().getSuperclass().getDeclaredField("driver");
@@ -33,12 +49,11 @@ public class TestResultExtension implements TestWatcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-        File SrcFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(SrcFile, new File("error.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void quitDriver(){
+        if(this.driver!=null){
+            this.driver.quit();
         }
     }
 }
