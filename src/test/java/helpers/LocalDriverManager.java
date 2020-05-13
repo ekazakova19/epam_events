@@ -6,10 +6,10 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class DriverManager {
+public class LocalDriverManager {
 
     private  WebDriver driver;
-    private static final Logger logger = LogManager.getLogger(DriverManager.class);
+    private static final Logger logger = LogManager.getLogger(LocalDriverManager.class);
 
     public  WebDriver getDriver(String browser) {
 

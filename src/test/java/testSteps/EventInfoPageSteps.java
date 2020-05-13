@@ -30,10 +30,14 @@ public class EventInfoPageSteps {
     @Step("Assert that event fields are shown on the event info page")
     public void assertThatMainElementsDisplayed(){
         assertAll("Assert that fields are not empty",
-                ()->assertTrue(eventInfoPage.REG_BUTTON.isDisplayed(),"Register event button is not displayed or absent on the page"),
-                ()->assertTrue(eventInfoPage.EVENT_AGENDA.isDisplayed(),"Event agenda is not displayed or absent on the page"),
-                ()->assertTrue(eventInfoPage.EVENT_CARD_PROMO.isDisplayed(),"Event card promo is not displayed or absent on the page"),
-                ()->assertTrue((eventInfoPage.EVENT_DAY.isDisplayed()&&!eventInfoPage.EVENT_DAY.getText().isEmpty()),"Event Day is not displayed or empty on the page")
+                ()->assertTrue(eventInfoPage.REG_BUTTON.isDisplayed(),
+                        "Register event button is not displayed or absent on the page"),
+                ()->assertTrue(eventInfoPage.EVENT_AGENDA.isDisplayed(),
+                        "Event agenda is not displayed or absent on the page"),
+                ()->assertTrue(eventInfoPage.EVENT_CARD_PROMO.isDisplayed(),
+                        "Event card promo is not displayed or absent on the page"),
+                ()->assertTrue((eventInfoPage.EVENT_DAY.isDisplayed()&&!eventInfoPage.EVENT_DAY.getText().isEmpty()),
+                        "Event Day is not displayed or empty on the page")
         );
     }
 

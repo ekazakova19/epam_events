@@ -9,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.EventCardElement;
 import pages.EventsPage;
-
-import javax.xml.stream.EventFilter;
 import java.time.LocalDate;
 import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -33,13 +31,13 @@ public class EventsPageSteps {
     public void clickOnUpcomingEvents(){
         eventsPage.UPCOMING_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.UPCOMING_EVENTS_ACTIVE));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(filterSteps.eventFilterPanelELement.LOADER));
     }
     @Step("Click on Past Events tab")
     public void clickOnPastEvents(){
         eventsPage.PAST_EVENTS_NAV_LINK.click();
         wait.until(ExpectedConditions.visibilityOf(eventsPage.PAST_EVENTS_ACTIVE));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.LOADER));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(eventsPage.eventFilterPanelElement.LOADER));
     }
 
     @Step("Open events page and click on Upcoming Events")
@@ -59,12 +57,6 @@ public class EventsPageSteps {
         Assertions.assertTrue(eventsPage.getDisplayedEventCount()>0);
     }
 
-    private int getUpcomingEventCounterValue(){
-        return Integer.parseInt(eventsPage.UPCOMING_EVENT_COUNTER.getText());
-    }
-    private int getPastEventCounterValue(){
-        return Integer.parseInt(eventsPage.PAST_EVENT_COUNTER.getText());
-    }
 
     @Step("Assert that upcoming events counter is equal to displayed events count")
     public void assertThatUpcomingEventsCounterCorrect(){
@@ -129,5 +121,12 @@ public class EventsPageSteps {
         }
     }
 
+    private int getUpcomingEventCounterValue(){
+        return Integer.parseInt(eventsPage.UPCOMING_EVENT_COUNTER.getText());
+    }
+
+    private int getPastEventCounterValue(){
+        return Integer.parseInt(eventsPage.PAST_EVENT_COUNTER.getText());
+    }
 
 }

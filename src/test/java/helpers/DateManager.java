@@ -13,14 +13,13 @@ public class DateManager {
     public static LocalDate todayDate = LocalDate.now();
     public static DateTimeFormatter EVENTDATE_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
 
-
     public static boolean isDateInCurrentWeek(LocalDate date){
         LocalDate mondayOfCurrentWeek = todayDate.with(previousOrSame(MONDAY));
         LocalDate sundayOfCurrentWeek = todayDate.with(nextOrSame(SUNDAY));
+
         if(date.isBefore(todayDate)){
             return false;
-        }
-        else if((date.isEqual(mondayOfCurrentWeek) || date.isAfter(mondayOfCurrentWeek))
+        } else if((date.isEqual(mondayOfCurrentWeek) || date.isAfter(mondayOfCurrentWeek))
                 && (date.isEqual(sundayOfCurrentWeek)||date.isBefore(sundayOfCurrentWeek))){
             return true;
         }
@@ -30,6 +29,8 @@ public class DateManager {
         return date.isBefore(todayDate);
     }
     public static String handleRangeEventDate(String eventDate){
+
+        /* Handle a case when event date is presented as a range */
         if(eventDate.contains("-")){
             return eventDate.substring(eventDate.indexOf("-")+1).trim();
         }

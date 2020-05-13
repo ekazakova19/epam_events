@@ -11,8 +11,6 @@ import java.util.List;
 
 public class EventsPage {
 
-    private WebDriver driver;
-
     public static final String EVENTS_PAGE_URL ="https://events.epam.com/events";
 
     @FindBy(xpath = "//span[contains(text(),'Upcoming Events')]")
@@ -39,11 +37,10 @@ public class EventsPage {
     @FindBy(xpath="//div[@class='evnt-cards-container' and .//h3[text()='This week']]//div[contains(@class,'evnt-events-column')]")
     public List<WebElement> THIS_WEEK_EVENTS_LIST;
 
-    public By LOADER = By.cssSelector("div.evnt-global-loader");
-
     public EventFilterPanelELement eventFilterPanelElement;
-
     public List<EventCardElement> eventCardElements = new ArrayList<>();
+
+    private WebDriver driver;
 
     public EventsPage(WebDriver driver) {
         this.driver = driver;

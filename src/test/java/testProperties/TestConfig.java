@@ -8,6 +8,7 @@ public interface TestConfig extends Config {
     @DefaultValue("chrome")
     String browser();
 
+    /* use value = remote for running test on remote server */
     @DefaultValue("local")
     String runTestStrategy();
 }

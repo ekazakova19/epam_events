@@ -15,11 +15,11 @@ import java.util.Map;
 
 public class FilterSteps {
 
-    private WebDriver driver;
-    private WebDriverWait wait;
     EventFilterPanelELement eventFilterPanelELement;
     Map<FilterType,String> appliedFilters = new HashMap<>();
     TalkPage talkPage;
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     public FilterSteps(WebDriver driver) {
         this.driver = driver;
@@ -31,22 +31,6 @@ public class FilterSteps {
     @Step("Click on More Filters button")
     public void clickOnMoreFilters(){
         eventFilterPanelELement.EVENT_TOOGLE_BUTTON.click();
-    }
-
-
-    public void applyFilters(FilterType filterType, String value) {
-        switch (filterType.getTypeAsString().toUpperCase()){
-                case "LOCATION" :
-                    filterByLocation(value);
-                    break;
-                case "CATEGORY" :
-                    filterByCategory(value);
-                    break;
-                case "LANGUAGE" :
-                    filterByLanguage(value);
-                    break;
-            }
-          appliedFilters.put(filterType,value);
     }
 
     @Step("Apply filter by event location")
@@ -63,7 +47,8 @@ public class FilterSteps {
     @Step("Apply filter by event category")
     private void filterByCategory(String value){
         eventFilterPanelELement.CATEGORY_FIELD.click();
-        driver.findElement(LocatorsHelper.generateXpathLocatorForItem(eventFilterPanelELement.CATEGORIES_GROUP_ITEM_PATTERN,value)).click();
+        driver.findElement(LocatorsHelper.generateXpathLocatorForItem(eventFilterPanelELement.CATEGORIES_GROUP_ITEM_PATTERN,value))
+                .click();
         waitUntilFilterApply();
         eventFilterPanelELement.CATEGORY_FIELD.click();
     }
@@ -71,7 +56,8 @@ public class FilterSteps {
     @Step("Apply filter by event language")
     private void filterByLanguage(String value){
         eventFilterPanelELement.LAUNGUAGE_FIELD.click();
-        driver.findElement(LocatorsHelper.generateXpathLocatorForItem(eventFilterPanelELement.LAUNGUAGE_ITEM_PATTERN,value)).click();
+        driver.findElement(LocatorsHelper.generateXpathLocatorForItem(eventFilterPanelELement.LAUNGUAGE_ITEM_PATTERN,value))
+                .click();
         waitUntilFilterApply();
         eventFilterPanelELement.LAUNGUAGE_FIELD.click();
     }
@@ -87,4 +73,18 @@ public class FilterSteps {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(eventFilterPanelELement.LOADER));
     }
 
+    public void applyFilters(FilterType filterType, String value) {
+        switch (filterType.getTypeAsString().toUpperCase()){
+            case "LOCATION" :
+                filterByLocation(value);
+                break;
+            case "CATEGORY" :
+                filterByCategory(value);
+                break;
+            case "LANGUAGE" :
+                filterByLanguage(value);
+                break;
+        }
+        appliedFilters.put(filterType,value);
+    }
 }
