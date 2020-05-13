@@ -54,18 +54,23 @@ public class EventsPageSteps {
 
     @Step("Assert that event cards is shown on the page")
     public void assertThatEventCardsDisplayed(){
-        Assertions.assertTrue(eventsPage.getDisplayedEventCount()>0);
+        Assertions.assertTrue(eventsPage.getDisplayedEventCount()>0,
+                "No one event card is shown on the page");
     }
 
 
     @Step("Assert that upcoming events counter is equal to displayed events count")
     public void assertThatUpcomingEventsCounterCorrect(){
-        Assertions.assertEquals(getUpcomingEventCounterValue(),eventsPage.getDisplayedEventCount());
+        Assertions.assertEquals(getUpcomingEventCounterValue(),
+                eventsPage.getDisplayedEventCount(),
+                "Upcoming event counter is not equal to displayed events count");
     }
 
     @Step("Assert that past event's counter is equal to displayed past events")
     public void assertThatPastEventsCounterCorrect(){
-        Assertions.assertEquals(getPastEventCounterValue(),eventsPage.getDisplayedEventCount());
+        Assertions.assertEquals(getPastEventCounterValue(),
+                eventsPage.getDisplayedEventCount(),
+                "Past event counter is not equal to displayed events count");
     }
 
     @Step("Assert that every event card has correct fields")
@@ -99,7 +104,8 @@ public class EventsPageSteps {
 
     @Step("Assert that this week events are shown")
     public void assertThatThisWeekEventsDisplayed(){
-        Assertions.assertTrue(!eventsPage.THIS_WEEK_EVENTS_LIST.isEmpty(),"This week events are absent on the page");
+        Assertions.assertTrue(!eventsPage.THIS_WEEK_EVENTS_LIST.isEmpty(),
+                "This week events are absent on the page");
     }
     @Step("Assert that this week events are after today and before next week")
     public void assertThatThisWeekEventsOnThisWeek(){
@@ -107,7 +113,8 @@ public class EventsPageSteps {
         for (EventCardElement eventCardElement : eventsPage.eventCardElements){
            LocalDate eventDate = LocalDate.parse(DateManager.handleRangeEventDate(eventCardElement.EVENT_DATE.getText())
                    ,DateManager.EVENTDATE_FORMATTER);
-           Assertions.assertTrue(DateManager.isDateInCurrentWeek(eventDate),"Event date less than today date or it is out of the current week");
+           Assertions.assertTrue(DateManager.isDateInCurrentWeek(eventDate),
+                   "Event date less than today date or it is out of the current week");
         }
     }
 
@@ -117,7 +124,8 @@ public class EventsPageSteps {
         for (EventCardElement eventCardElement : eventsPage.eventCardElements){
             LocalDate eventDate = LocalDate.parse(DateManager.handleRangeEventDate(eventCardElement.EVENT_DATE.getText())
                     ,DateManager.EVENTDATE_FORMATTER);
-            Assertions.assertTrue(DateManager.isDateBeforeThanToday(eventDate),"Event date more than today date");
+            Assertions.assertTrue(DateManager.isDateBeforeThanToday(eventDate),
+                    "Event date more than today date");
         }
     }
 
