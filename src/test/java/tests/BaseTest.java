@@ -1,5 +1,6 @@
 package tests;
 
+import com.epam.healenium.SelfHealingDriver;
 import helpers.WebDriverLoggingListener;
 import helpers.LocalDriverManager;
 import org.aeonbits.owner.ConfigFactory;
@@ -10,7 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import testProperties.TestConfig;
-
+import com.typesafe.config.Config;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -57,5 +58,12 @@ public class BaseTest {
         EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
         eventFiringWebDriver.register(new WebDriverLoggingListener());
         driver = eventFiringWebDriver;
+        driver = delegateDriverToHealing(driver);
+
+    }
+
+    public SelfHealingDriver delegateDriverToHealing(WebDriver driver){
+        Config config = com.typesafe.config.ConfigFactory.load("healenium.properties");
+        return SelfHealingDriver.create(driver, config);
     }
 }
