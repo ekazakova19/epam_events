@@ -1,21 +1,17 @@
 # EPAM events portal test framework
 
 The project is a test framework for EPAM event portal https://events.epam.com/.
-It is work for OTUS JAVA QA Automation course.
-
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
+It is a course work of OTUS JAVA QA Automation course.
 
 # Implemented framework requirements
-    1. Tech stack - Java + Maven + Junit5
-    2. Logging with Log4j2
-    3. Web driver factory for cross-browser test
-    4. Remote test execution using Selenoid
-    5. Parallel test execution
-    6. Allure as a report tool
-    7. Page Object pattern for page description
-    8. Jenkins pipeline as CI tool
+  1. Tech stack - Java + Maven + Junit5
+  2. Logging with Log4j2
+  3. Web driver factory for cross-browser test
+  4. Remote test execution using Selenoid
+  5. Parallel test execution
+  6. Allure as a report tool
+  7. Page Object pattern for page description
+  8. Jenkins pipeline as CI tool
 
 # Test coverage
 The following test cases has been automated :
