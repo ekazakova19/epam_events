@@ -16,60 +16,56 @@ It is a course work of OTUS JAVA QA Automation course.
 # Test coverage
 The following test cases has been automated :
 
-UPCOMING EVENTS :
+**Upcoming events view:**
+ 1. User opens <Events> tab
+ 2. The user click on <Upcoming Events> tab
+ 3. The page contains a list of event's card. Cards count is equal to value of Upcoming Events tab counter;
 
- 1. Upcoming events view:
-    1.1 User opens <Events> tab
-    1.2 The user click on <Upcoming Events> tab
-    1.3 The page contains a list of event's card. Cards count is equal to value of Upcoming Events tab counter;
-2. Upcoming event card view:
-    2.1 User opens <Events> tab
-    2.2 The user click on <Upcoming Events> tab
-    2.3 The page contains a list of event's card
-    2.4 The card contains the following event info:
-        • location and language
-        • event name
-        • event date
-        • registry information
-        • list of speakers
-        Note : It is important to check order of displayed information
-3. Upcoming events dates validation
-    3.1 User opens <Events> tab
-    3.2 The user click on <Upcoming Events> tab
-    3.3 The page contains a list of event's card
-    3.4 Event cards which are shown in the <This week> block have date, which is after or equal today date and is in current week range
+**Upcoming event card view:**
+ 1. User opens <Events> tab
+ 2. The user click on <Upcoming Events> tab
+ 3. The page contains a list of event's card
+ 4. The card contains the following event info:
+    * location and language
+    * event name
+    * event date
+    * registry information
+    * list of speakers
+    _Note : It is important to check order of displayed information_
 
-4. View upcoming event detailed information:
-    4.1 User opens <Events> tab
-    4.2 The user click on <Upcoming Events> tab
-    4.3 The page contains a list of event's card.
-    4.4 The user clicks on any event card
-    4.5 The event info page is opened
-    4.6 The page contains the follwoing info
+**Upcoming events dates validation**
+ 1. User opens <Events> tab
+ 2. The user click on <Upcoming Events> tab
+ 3. The page contains a list of event's card
+ 4. Event cards which are shown in the <This week> block have date, which is after or equal today date and is in current week range
+
+**View upcoming event detailed information:**
+ 1. User opens <Events> tab
+ 2. The user click on <Upcoming Events> tab
+ 3. The page contains a list of event's card.
+ 4. The user clicks on any event card
+ 5. The event info page is opened
+ 6. The page contains the follwoing info
         • header with registry button,
         • event agenda,
-        • event date, time, location
+        • event date, time, locatio
 
-PAST EVENTS :
+**View past events in the Canada:**
+ 1. User opens <Events> tab
+ 2. The user click on <Past Events> tab
+ 3. The user click on Location fiels in the filter block and chooses Canada in the dropdown list
+ 4. The page contains a list of event's card. Cards count is equal to value of Past Events tab counter;
+ 5. Date of the displayed events is before current date
 
-5. View past events in the Canada:
-    5.1 User opens <Events> tab
-    5.2 The user click on <Past Events> tab
-    5.3 The user click on Location fiels in the filter block and chooses Canada in the dropdown list
-    5.4 The page contains a list of event's card. Cards count is equal to value of Past Events tab counter;
-    5.5 Date of the displayed events is before current date
+**Talks filter by several categories:**
+ 1. User opens <Talks Library> tab
+ 2. User clicks on More Filters button
+ 3. User chooses : Category – Design, Location – Belarus, Language – English
+ 4. The page shows event cards which match with filter criteria
 
-TALKS LIBRARY :
-
-6. Talks filter by several categories:
-    6.1 User opens <Talks Library> tab
-    6.2 User clicks on More Filters button
-    6.3 User chooses : Category – Design, Location – Belarus, Language – English
-    6.4 The page shows event cards which match with filter criteria
-
-7. Search talks by keyword:
-   7.1 User opens <Talks Library> tab
-   7.2 User inout Azure in the search field
-   7.3 The page shows event cards which contains the keyword
+**Search talks by keyword:**
+ 1. User opens <Talks Library> tab
+ 2. User inout Azure in the search field
+ 3. The page shows event cards which contains the keyword
 
 
