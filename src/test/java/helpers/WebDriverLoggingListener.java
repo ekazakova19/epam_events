@@ -14,23 +14,23 @@ public class WebDriverLoggingListener extends AbstractWebDriverEventListener {
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        logger.info("Navigated to {}", url);
+        logger.debug("Navigated to {}", url);
     }
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        logger.info("Clicking element {}",element);
+        logger.debug("Clicking element {}",element);
     }
 
     @Override
     public void afterClickOn(WebElement element, WebDriver driver) {
-        logger.info("Clicked element {}", element);
+        logger.debug("Clicked element {}", element);
     }
     @Override
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-        logger.info("Try to locate element using {}", by);
+        logger.debug("Try to locate element using {}", by);
     }
     @Override
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
-        logger.info("Located element using {}", by);
+        logger.debug("Located element using {}", by);
     }
 }

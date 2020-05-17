@@ -29,7 +29,7 @@ public class TestResultExtension implements TestWatcher, AfterEachCallback {
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        logger.info("Test \" {} \" failed due to : {}", context.getDisplayName(), cause.getMessage());
+        logger.error("Test \" {} \" failed due to : {}", context.getDisplayName(), cause.getMessage());
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")
