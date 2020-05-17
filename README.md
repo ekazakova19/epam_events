@@ -12,6 +12,7 @@ It is a course work of OTUS JAVA QA Automation course.
   6. Allure as a report tool
   7. Page Object pattern for page description
   8. Jenkins pipeline as CI tool
+  9. Healenium as a tool for locator healing
 
 # Test coverage
 The following test cases has been automated :
