@@ -1,92 +1,79 @@
-Проектная работа от EPAM
-Цель: Задача для проекта: Необходимо построить фреймворк для автоматизации Е2Е тестирования сайта с обязательным тестовым покрытием. Обязательным является использование библиотеки Healenium и Report Portal. Задачи с пометкой «*дополнительно» выполняются по желанию.
-Что будем тестировать: Приложение https://events.epam.com/ предоставляет информацию о мероприятиях, которые проводит EPAM. Сайт позволяет посмотреть предстоящие/прошедшие мероприятия в разных городах, информацию о спикерах, докладах, календарь мероприятий.
-Требования к фреймворку:
-1. Java + Maven/Gradle + TestNG/Junit 5 проект
-2. Настроено логирование (Log4J, SLF4J или любая другая библиотека)
-3. Реализована возможность кроссбаузерного тестирования
-4. Реализована возможность удаленного запуска тестов (Selenoid или Selenium Grid)
-5. Реализована возможность параллельного запуска тестов
-✓6. Код проекта хранится в Git (важна частота и содержание коммитов)
-✓7. Для работы со страницами используется паттерн Page Object
-8. Код оформлен согласно Java Code Conventions, комментарии в стиле Javadoc приветствуются
-*Дополнительно:
-Для стабилизации нахождения локаторов используется библиотека Healenium (https://github.com/healenium/healenium-web)
-Подключен Report Portal (https://reportportal.io/)
-Настроена интеграция с CI и запуск тестов по расписанию
+# EPAM events portal test framework
 
-Plan:
-✓ 1) Реализована возможность кроссбаузерного тестирования
-✓ 2) Реализована возможность удаленного запуска тестов  - Selenoid
-       ❓ - ответсвенность за запуск селеноида на дженкинсе
-✓ 3) Скриншоты на падение
-       ❓ - сделано через рефлексию, можно сделать по хорошемк через ДИ
-  4) возможность параллельного запуска тестов
-  5) Прикрутить систему отчетности
+The project is a test framework for EPAM event portal https://events.epam.com/.
+It is work for OTUS JAVA QA Automation course.
 
-Обязательное тестовое покрытие:
-UPCOMING EVENTS
-✓ 1. Просмотр предстоящих мероприятий:
-    ✓1.1 Пользователь переходит на вкладку events ---OpenEventTab
-    ✓1.2 Пользователь нажимает на Upcoming Events -- clickOnUpcomingEvents
-    ✓1.3 На странице отображаются карточки предстоящих мероприятий. Количество карточек равно счетчику на кнопке Upcoming Events
-           ❓ что если карточки не найдены потому что нет ивентов?
-✓ 2. Просмотр карточек мероприятий:
-    ✓2.1 Пользователь переходит на вкладку events ---
-    ✓2.2 Пользователь нажимает на Upcoming Events openUpcomingEvents
-    ✓2.3 На странице отображаются карточки предстоящих мероприятий.
-    ✓2.4 В карточке указана информация о мероприятии:
-        • место проведения, язык
-        • название мероприятия
-        • дата мероприятия
-        • информация о регистрации
-        • список спикеров
-        Важно проверить порядок отображаемых блоков с информацией в карточке мероприятия
-        ❓ если сценарий не онлайн
-3. Валидация дат предстоящих мероприятий:
-   ✓ 3.1 Пользователь переходит на вкладку events
-   ✓ 3.2 Пользователь нажимает на Upcoming Events
-   ✓ 3.3 На странице отображаются карточки предстоящих мероприятий.
-   ✓3.4 В блоке This week даты проведения мероприятий больше или равны текущей дате и находятся в пределах текущей недели.
+  - Type some Markdown on the left
+  - See HTML in the right
+  - Magic
 
-5. Просмотр детальной информации о мероприятии:
-   ✓ 5.1 Пользователь переходит на вкладку events
-   ✓ 5.2 Пользователь нажимает на Upcoming Events
-   ✓ 5.3 На странице отображаются карточки предстоящих мероприятий.
-   ✓ 5.4 Пользователь нажимает на любую карточку
-   ✓ 5.5 Происходит переход на страницу с подробной информацией о мероприятии
-    5.6 На странице с информацией о мероприятии отображается
-        ✓шапка с кнопкой для регистрации,
-        ✓основная часть с программой мероприятия,
-       ✓ датой, временем, местом проведения
-       ❓Проблема с идентификацией EVENT_TIME элемента
+# Implemented framework requirements
+    1. Tech stack - Java + Maven + Junit5
+    2. Logging with Log4j2
+    3. Web driver factory for cross-browser test
+    4. Remote test execution using Selenoid
+    5. Parallel test execution
+    6. Allure as a report tool
+    7. Page Object pattern for page description
+    8. Jenkins pipeline as CI tool
 
- TODO:
- Add logging https://www.baeldung.com/junit-5-extensions https://junit.org/junit5/docs/5.0.0/user-guide/#extensions-lifecycle-callbacks
- Refactor
- Screenshot
-  - https://bonigarcia.github.io/selenium-jupiter/#screenshots
-  -  юзать экстеншен test watcher dependecy injection https://junit.org/junit5/docs/current/user-guide/#writing-tests-dependency-injection
+# Test coverage
+The following test cases has been automated :
 
-✓PAST EVENTS
-4. Просмотр прошедших мероприятий в Канаде:
-     ✓4.1 Пользователь переходит на вкладку events
-     ✓4.2 Пользователь нажимает на Past Events
-     ✓4.3 Пользователь нажимает на Location в блоке фильтров и выбирает Canada в выпадающем списке
-     ✓4.4 На странице отображаются карточки прошедших мероприятий. Количество карточек равно счетчику на кнопке Past Events.
-     ✓Даты проведенных мероприятий меньше текущей даты.
+UPCOMING EVENTS :
 
-✓Talks Library Filtering
-6. Фильтрация докладов по категориям:
-    ✓6.1 Пользователь переходит на вкладку Talks Library
-    ✓6.2 Пользователь нажимает на More Filters
-    ✓6.3 Пользователь выбирает: Category – Design, Location – Belarus, Language – English, На вкладке фильтров
-    ✓6.4 На странице отображаются карточки соответствующие правилам выбранных фильтров
+ 1. Upcoming events view:
+    1.1 User opens <Events> tab
+    1.2 The user click on <Upcoming Events> tab
+    1.3 The page contains a list of event's card. Cards count is equal to value of Upcoming Events tab counter;
+2. Upcoming event card view:
+    2.1 User opens <Events> tab
+    2.2 The user click on <Upcoming Events> tab
+    2.3 The page contains a list of event's card
+    2.4 The card contains the following event info:
+        • location and language
+        • event name
+        • event date
+        • registry information
+        • list of speakers
+        Note : It is important to check order of displayed information
+3. Upcoming events dates validation
+    3.1 User opens <Events> tab
+    3.2 The user click on <Upcoming Events> tab
+    3.3 The page contains a list of event's card
+    3.4 Event cards which are shown in the <This week> block have date, which is after or equal today date and is in current week range
 
-✓Talks Library Search
-7. Поиск докладов по ключевому слову:
-   ✓ 7.1 Пользователь переходит на вкладку Talks Library
-   ✓ 7.2 Пользователь вводит ключевое слово Azure в поле поиска
-   ✓ 7.3 На странице отображаются доклады, содержащие в названии ключевое слово поиска
+4. View upcoming event detailed information:
+    4.1 User opens <Events> tab
+    4.2 The user click on <Upcoming Events> tab
+    4.3 The page contains a list of event's card.
+    4.4 The user clicks on any event card
+    4.5 The event info page is opened
+    4.6 The page contains the follwoing info
+        • header with registry button,
+        • event agenda,
+        • event date, time, location
 
-*Дополнительно: Тестовое покрытие может быть расширено для функциональности фильтрации
+PAST EVENTS :
+
+5. View past events in the Canada:
+    5.1 User opens <Events> tab
+    5.2 The user click on <Past Events> tab
+    5.3 The user click on Location fiels in the filter block and chooses Canada in the dropdown list
+    5.4 The page contains a list of event's card. Cards count is equal to value of Past Events tab counter;
+    5.5 Date of the displayed events is before current date
+
+TALKS LIBRARY :
+
+6. Talks filter by several categories:
+    6.1 User opens <Talks Library> tab
+    6.2 User clicks on More Filters button
+    6.3 User chooses : Category – Design, Location – Belarus, Language – English
+    6.4 The page shows event cards which match with filter criteria
+
+7. Search talks by keyword:
+   7.1 User opens <Talks Library> tab
+   7.2 User inout Azure in the search field
+   7.3 The page shows event cards which contains the keyword
+
+
