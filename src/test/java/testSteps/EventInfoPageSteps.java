@@ -18,7 +18,7 @@ public class EventInfoPageSteps {
     public EventInfoPageSteps(WebDriver driver) {
         this.driver = driver;
         eventInfoPage = new EventInfoPage(driver);
-        wait = new WebDriverWait(driver,5);
+        wait = new WebDriverWait(driver,8);
         actions = new Actions(driver);
     }
 

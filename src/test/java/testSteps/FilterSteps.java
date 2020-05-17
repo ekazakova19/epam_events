@@ -23,7 +23,7 @@ public class FilterSteps {
 
     public FilterSteps(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver,5);
+        wait = new WebDriverWait(driver,8);
         eventFilterPanelELement = new EventFilterPanelELement(driver);
         talkPage = new TalkPage(driver);
     }

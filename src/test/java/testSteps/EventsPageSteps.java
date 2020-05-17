@@ -22,7 +22,7 @@ public class EventsPageSteps {
 
     public EventsPageSteps(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver,5);
+        wait = new WebDriverWait(driver,8);
         eventsPage = new EventsPage(driver);
         filterSteps = new FilterSteps(driver);
     }
